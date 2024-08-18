@@ -4,6 +4,8 @@ namespace NetCoreVolunteering.Domain.Models;
 
 public class Pet
 {
+    private readonly List<PetPhoto> _petPhotos = [];
+    
     private Pet(
         Guid id, 
         string name, 
@@ -58,6 +60,7 @@ public class Pet
     public HelpStatus Status { get; private set; }
     public Props PaymentDetails { get; private set; }
     public DateTime CreatedAt { get; private set; }
+    public IReadOnlyCollection<PetPhoto> Images => _petPhotos;
 
     public static Pet Create(
         Guid id,
