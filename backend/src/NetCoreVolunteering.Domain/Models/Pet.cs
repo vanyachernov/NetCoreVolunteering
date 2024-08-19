@@ -5,6 +5,10 @@ namespace NetCoreVolunteering.Domain.Models;
 public class Pet
 {
     private readonly List<PetPhoto> _petPhotos = [];
+    private readonly List<Requisite> _requisites = [];
+    
+    // For EF Core
+    private Pet() {}
     
     private Pet(
         Guid id, 
@@ -21,10 +25,9 @@ public class Pet
         bool isNeutered, 
         DateTime birthAt, 
         bool isVaccinated, 
-        HelpStatus status, 
-        Props paymentDetails)
+        HelpStatus status)
     {
-        Id = id;
+        
         Name = name;
         Species = species;
         Description = description;
@@ -39,15 +42,14 @@ public class Pet
         BirthAt = birthAt;
         IsVaccinated = isVaccinated;
         Status = status;
-        PaymentDetails = paymentDetails;
         CreatedAt = DateTime.UtcNow;
     }
-
+    
     public Guid Id { get; private set; }
     public string Name { get; private set; } = default!;
     public Species Species { get; private set; } 
     public string Description { get; private set; } = default!;
-    public Breed Breed { get; private set; }
+    public Breed Breed  { get; private set; }
     public string Color { get; private set; } = default!;
     public string HealthInfo { get; private set; } = default!;
     public string Address { get; private set; } = default!;
@@ -58,7 +60,7 @@ public class Pet
     public DateTime BirthAt { get; private set; }
     public bool IsVaccinated { get; private set; }
     public HelpStatus Status { get; private set; }
-    public Props PaymentDetails { get; private set; }
+    public IReadOnlyCollection<Requisite> PaymentDetails => _requisites;
     public DateTime CreatedAt { get; private set; }
     public IReadOnlyCollection<PetPhoto> Images => _petPhotos;
 
@@ -77,10 +79,10 @@ public class Pet
         bool isNeutered,
         DateTime birthAt,
         bool isVaccinated,
-        HelpStatus status,
-        Props paymentDetails)
+        HelpStatus status)
     {
+        // So far.
         return new Pet(id, name, species, description, breed, color, healthInfo, address, weight, height, phoneNumber,
-            isNeutered, birthAt, isVaccinated, status, paymentDetails);
+            isNeutered, birthAt, isVaccinated, status);
     }
 }

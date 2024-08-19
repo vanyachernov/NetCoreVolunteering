@@ -6,7 +6,10 @@ public class Volunteer
 {
     private readonly List<Pet> _pets = [];
     private readonly List<SocialNetwork> _socialNetworks = [];
-    private readonly List<Props> _paymentDetails = [];
+    private readonly List<Requisite> _paymentDetails = [];
+    
+    // For EF Core
+    private Volunteer() {}
     
     public Guid Id { get; private set; }
     public string FullName { get; private set; } = default!;
@@ -19,5 +22,5 @@ public class Volunteer
     public string Phone { get; private set; } = default!;
     public IReadOnlyCollection<Pet> Pets => _pets;
     public IReadOnlyCollection<SocialNetwork> SocialNetworks => _socialNetworks;
-    public IReadOnlyCollection<Props> PaymentDetails => _paymentDetails;
+    public IReadOnlyCollection<Requisite> PaymentDetails => _paymentDetails;
 }
