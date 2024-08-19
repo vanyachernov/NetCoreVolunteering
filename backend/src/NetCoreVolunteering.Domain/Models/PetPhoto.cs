@@ -9,12 +9,14 @@ public class PetPhoto
     
     private PetPhoto(Guid petPhotoId, string pathToStorage, bool isMainPhoto)
     {
+        Id = petPhotoId;
         Path = pathToStorage;
         IsMainPhoto = isMainPhoto;
     }
     
-    public string Path { get; }
-    public bool IsMainPhoto { get; set; }
+    public Guid Id { get; private set; }
+    public string Path { get; private set; }
+    public bool IsMainPhoto { get; private set; }
 
     public static Result<PetPhoto> Create(Guid petPhotoId, string pathToStorage, bool isMainPhoto)
     {
