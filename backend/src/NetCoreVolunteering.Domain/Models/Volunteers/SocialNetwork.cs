@@ -1,4 +1,4 @@
-namespace NetCoreVolunteering.Domain.Models;
+namespace NetCoreVolunteering.Domain.Models.Volunteers;
 
 public class SocialNetwork
 {

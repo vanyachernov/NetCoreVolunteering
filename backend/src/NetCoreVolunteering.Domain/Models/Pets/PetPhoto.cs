@@ -1,25 +1,21 @@
 using CSharpFunctionalExtensions;
-using NetCoreVolunteering.Domain.Models.Pets.IDs;
 
-namespace NetCoreVolunteering.Domain.Models;
+namespace NetCoreVolunteering.Domain.Models.Pets;
 
-public class PetPhoto : Shared.Entity<PetPhotoId>
+public class PetPhoto
 {
-    // For EF Core
-    private PetPhoto(PetPhotoId petPhotoId) : base(petPhotoId) {}
-    
-    private PetPhoto(PetPhotoId petPhotoId, string pathToStorage, bool isMainPhoto) : base(petPhotoId)
+    private PetPhoto(string pathToStorage, bool isMainPhoto)
     {
         Path = pathToStorage;
         IsMainPhoto = isMainPhoto;
     }
     
-    public string Path { get; private set; }
-    public bool IsMainPhoto { get; private set; }
+    public string Path { get;  }
+    public bool IsMainPhoto { get; }
 
-    public static Result<PetPhoto> Create(PetPhotoId petPhotoId, string pathToStorage, bool isMainPhoto)
+    public static Result<PetPhoto> Create(string pathToStorage, bool isMainPhoto)
     {
         // So far.
-        return new PetPhoto(petPhotoId, pathToStorage, isMainPhoto);
+        return new PetPhoto(pathToStorage, isMainPhoto);
     }
 }
