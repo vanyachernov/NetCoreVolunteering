@@ -1,19 +1,22 @@
 using NetCoreVolunteering.Domain.Enums;
+using NetCoreVolunteering.Domain.Models.Pets.IDs;
+using NetCoreVolunteering.Domain.Models.Species;
+using NetCoreVolunteering.Domain.Shared;
 
-namespace NetCoreVolunteering.Domain.Models;
+namespace NetCoreVolunteering.Domain.Models.Pets;
 
-public class Pet
+public class Pet : Entity<PetId>
 {
     private readonly List<PetPhoto> _petPhotos = [];
     private readonly List<Requisite> _requisites = [];
     
     // For EF Core
-    private Pet() {}
+    private Pet(PetId petId) : base(petId) {}
     
     private Pet(
-        Guid id, 
+        PetId petId,
         string name, 
-        Species species, 
+        Species.Species species, 
         string description, 
         Breed breed, 
         string color, 
@@ -26,6 +29,7 @@ public class Pet
         DateTime birthAt, 
         bool isVaccinated, 
         HelpStatus status)
+    : base(petId)
     {
         
         Name = name;
@@ -47,7 +51,7 @@ public class Pet
     
     public Guid Id { get; private set; }
     public string Name { get; private set; } = default!;
-    public Species Species { get; private set; } 
+    public Species.Species Species { get; private set; } 
     public string Description { get; private set; } = default!;
     public Breed Breed  { get; private set; }
     public string Color { get; private set; } = default!;
@@ -65,9 +69,9 @@ public class Pet
     public IReadOnlyCollection<PetPhoto> Images => _petPhotos;
 
     public static Pet Create(
-        Guid id,
+        PetId petId,
         string name,
-        Species species,
+        Species.Species species,
         string description,
         Breed breed,
         string color,
@@ -82,7 +86,7 @@ public class Pet
         HelpStatus status)
     {
         // So far.
-        return new Pet(id, name, species, description, breed, color, healthInfo, address, weight, height, phoneNumber,
+        return new Pet(petId, name, species, description, breed, color, healthInfo, address, weight, height, phoneNumber,
             isNeutered, birthAt, isVaccinated, status);
     }
 }
