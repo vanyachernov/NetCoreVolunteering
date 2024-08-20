@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NetCoreVolunteering.Domain.Models;
+using NetCoreVolunteering.Domain.Models.Pets;
 
 namespace NetCoreVolunteering.Infrastructure;
 

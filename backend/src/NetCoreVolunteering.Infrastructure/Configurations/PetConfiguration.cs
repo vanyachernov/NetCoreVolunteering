@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NetCoreVolunteering.Domain.Enums;
 using NetCoreVolunteering.Domain.Models;
+using NetCoreVolunteering.Domain.Models.Pets;
 using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.Infrastructure.Configurations;

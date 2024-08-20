@@ -1,4 +1,5 @@
 using NetCoreVolunteering.Domain.Enums;
+using NetCoreVolunteering.Domain.Models.Pets;
 
 namespace NetCoreVolunteering.Domain.Models;
 
