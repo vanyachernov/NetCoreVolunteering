@@ -1,12 +1,12 @@
 using CSharpFunctionalExtensions;
 
-namespace NetCoreVolunteering.Domain.Models.Pets;
+namespace NetCoreVolunteering.Domain.Models.Pets.ValueObjects;
 
-public class PetPhoto
+public record PetPhoto
 {
-    private PetPhoto(string pathToStorage, bool isMainPhoto)
+    private PetPhoto(string path, bool isMainPhoto)
     {
-        Path = pathToStorage;
+        Path = path;
         IsMainPhoto = isMainPhoto;
     }
     
@@ -15,7 +15,11 @@ public class PetPhoto
 
     public static Result<PetPhoto> Create(string pathToStorage, bool isMainPhoto)
     {
-        // So far.
+        if (string.IsNullOrWhiteSpace(pathToStorage))
+        {
+            return Result.Failure<PetPhoto>("path cannot be empty");
+        }
+        
         return new PetPhoto(pathToStorage, isMainPhoto);
     }
 }

@@ -3,28 +3,27 @@ using NetCoreVolunteering.Domain.Models.Pets;
 using NetCoreVolunteering.Domain.Models.Volunteers.IDs;
 using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
 using NetCoreVolunteering.Domain.Shared;
-using Description = NetCoreVolunteering.Domain.Models.Pets.ValueObjects.Description;
-using PhoneNumber = NetCoreVolunteering.Domain.Models.Pets.ValueObjects.PhoneNumber;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Domain.Models.Volunteers;
 
-public class Volunteer : Entity<VolunteerId>
+public sealed class Volunteer : Entity<VolunteerId>
 {
     private readonly List<Pet> _pets = [];
     private readonly List<SocialNetwork> _socialNetworks = [];
     private readonly List<Requisite> _paymentDetails = [];
     
     // For EF Core
-    private Volunteer(VolunteerId volunteerId) : base(volunteerId) {}
+    private Volunteer(VolunteerId id) : base(id) {}
 
     public Volunteer(
-        VolunteerId volunteerId,
+        VolunteerId id,
         FullName fullName,
         Email email,
         Description description,
         ExperienceYears experienceYears,
         PhoneNumber phone) 
-            : base(volunteerId)
+            : base(id)
     {
         FullName = fullName;
         Email = email;
@@ -33,11 +32,11 @@ public class Volunteer : Entity<VolunteerId>
         Phone = phone;
     }
     
-    public FullName FullName { get; } = default!;
-    public Email Email { get; } = default!;
-    public Description Description { get; } = default!;
-    public ExperienceYears Ages { get; } = default!;
-    public PhoneNumber Phone { get; } = default!;
+    public FullName FullName { get; private set; } = default!;
+    public Email Email { get; private set; } = default!;
+    public Description Description { get; private set; } = default!;
+    public ExperienceYears Ages { get; private set; } = default!;
+    public PhoneNumber Phone { get; private set; } = default!;
     public IReadOnlyCollection<Pet> Pets => _pets;
     public IReadOnlyCollection<SocialNetwork> SocialNetworks => _socialNetworks;
     public IReadOnlyCollection<Requisite> PaymentDetails => _paymentDetails;

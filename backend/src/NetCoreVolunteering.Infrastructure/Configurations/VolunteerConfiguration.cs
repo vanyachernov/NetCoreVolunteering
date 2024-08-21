@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NetCoreVolunteering.Domain.Models;
 using NetCoreVolunteering.Domain.Models.Volunteers;
+using NetCoreVolunteering.Domain.Models.Volunteers.IDs;
 using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.Infrastructure.Configurations;
@@ -14,6 +15,11 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         
         builder
             .HasKey(v => v.Id);
+        
+        builder.Property(p => p.Id)
+            .HasConversion(
+                id => id.Id,
+                value => VolunteerId.Create(value));
         
         builder.ComplexProperty(p => p.FullName, da =>
         {

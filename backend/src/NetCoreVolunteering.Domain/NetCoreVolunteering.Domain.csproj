@@ -10,9 +10,4 @@
       <PackageReference Include="CSharpFunctionalExtensions" Version="2.42.5" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Models\Pets\Lists\" />
-      <Folder Include="Models\Volunteers\Lists\" />
-    </ItemGroup>
-
 </Project>

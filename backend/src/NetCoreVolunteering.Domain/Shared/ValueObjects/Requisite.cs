@@ -1,4 +1,4 @@
-namespace NetCoreVolunteering.Domain.Models.Pets;
+namespace NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 public class Requisite
 {
