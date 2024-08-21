@@ -1,92 +1,99 @@
+using CSharpFunctionalExtensions;
 using NetCoreVolunteering.Domain.Enums;
 using NetCoreVolunteering.Domain.Models.Pets.IDs;
-using NetCoreVolunteering.Domain.Models.Species;
+using NetCoreVolunteering.Domain.Models.Pets.Lists;
+using NetCoreVolunteering.Domain.Models.Pets.ValueObjects;
+using NetCoreVolunteering.Domain.Models.Species.IDs;
+using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
 using NetCoreVolunteering.Domain.Shared;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Domain.Models.Pets;
 
-public class Pet : Entity<PetId>
+public class Pet : Shared.Entity<PetId>
 {
-    private readonly List<PetPhoto> _petPhotos = [];
-    private readonly List<Requisite> _requisites = [];
-    
     // For EF Core
-    private Pet(PetId petId) : base(petId) {}
+    private Pet(PetId id) : base(id) {}
     
     private Pet(
-        PetId petId,
+        PetId id,
         string name, 
-        Species.Species species, 
-        string description, 
-        Breed breed, 
-        string color, 
-        string healthInfo, 
-        string address, 
-        double weight, 
-        double height,
-        string phoneNumber, 
+        SpeciesId speciesId, 
+        Description description, 
+        Guid breedId, 
+        Color color, 
+        HealthInfo healthInfo, 
+        Address address, 
+        PetAttributes petAttributes,
+        PhoneNumber phone, 
         bool isNeutered, 
         DateTime birthAt, 
         bool isVaccinated, 
-        HelpStatus status)
-    : base(petId)
+        HelpStatus status,
+        PetPhotoList petPhotoList,
+        RequisiteList requisiteList)
+    : base(id)
     {
         
         Name = name;
-        Species = species;
+        SpeciesId = speciesId;
         Description = description;
-        Breed = breed;
+        BreedId = breedId;
         Color = color;
         HealthInfo = healthInfo;
         Address = address;
-        Weight = weight;
-        Height = height;
-        PhoneNumber = phoneNumber;
+        PetAttributes = petAttributes;
+        Phone = phone;
         IsNeutered = isNeutered;
         BirthAt = birthAt;
         IsVaccinated = isVaccinated;
         Status = status;
+        Images = petPhotoList;
+        PaymentDetails = requisiteList;
         CreatedAt = DateTime.UtcNow;
     }
     
-    public Guid Id { get; private set; }
-    public string Name { get; private set; } = default!;
-    public Species.Species Species { get; private set; } 
-    public string Description { get; private set; } = default!;
-    public Breed Breed  { get; private set; }
-    public string Color { get; private set; } = default!;
-    public string HealthInfo { get; private set; } = default!;
-    public string Address { get; private set; } = default!;
-    public double Weight { get; private set; }
-    public double Height { get; private set; }
-    public string PhoneNumber { get; private set; } =  default!;
+    public string Name { get; private set;  } = default!;
+    public SpeciesId SpeciesId { get; private set; } = default!;
+    public Description Description { get; private set; } = default!;
+    public Guid BreedId { get; private set; } = default!;
+    public Color Color { get; private set; } = default!;
+    public HealthInfo HealthInfo { get; private set; } = default!;
+    public Address Address { get; private set; } = default!;
+    public PetAttributes PetAttributes { get; private set; } = default!;
+    public PhoneNumber Phone { get; private set; } = default!;
     public bool IsNeutered { get; private set; }
     public DateTime BirthAt { get; private set; }
     public bool IsVaccinated { get; private set; }
     public HelpStatus Status { get; private set; }
-    public IReadOnlyCollection<Requisite> PaymentDetails => _requisites;
     public DateTime CreatedAt { get; private set; }
-    public IReadOnlyCollection<PetPhoto> Images => _petPhotos;
+    public PetPhotoList? Images { get; private set; } = default!;
+    public RequisiteList PaymentDetails { get; private set; } = default!;
 
-    public static Pet Create(
+    public static Result<Pet> Create(
         PetId petId,
         string name,
-        Species.Species species,
-        string description,
-        Breed breed,
-        string color,
-        string healthInfo,
-        string address,
-        double weight,
-        double height,
-        string phoneNumber,
+        SpeciesId speciesId,
+        Description description,
+        Guid breedId,
+        Color color,
+        HealthInfo healthInfo,
+        Address address,
+        PetAttributes petAttributes, 
+        PhoneNumber phone,
         bool isNeutered,
         DateTime birthAt,
         bool isVaccinated,
-        HelpStatus status)
+        HelpStatus status,
+        PetPhotoList petPhotoList,
+        RequisiteList requisiteList)
     {
-        // So far.
-        return new Pet(petId, name, species, description, breed, color, healthInfo, address, weight, height, phoneNumber,
-            isNeutered, birthAt, isVaccinated, status);
+        if (string.IsNullOrEmpty(name) || name.Length > Constants.MAX_LOW_TEXT_LENGTH)
+        {
+            return Result.Failure<Pet>("Pet name is invalid.");
+        }
+        
+        return new Pet(petId, name, speciesId, description, breedId, color, healthInfo, address, petAttributes, phone,
+            isNeutered, birthAt, isVaccinated, status, petPhotoList, requisiteList);
     }
 }
