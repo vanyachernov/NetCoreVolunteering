@@ -14,9 +14,10 @@ public class PetDbContext(IConfiguration configuration) : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
-        optionsBuilder.UseSnakeCaseNamingConvention();
-        optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
+        optionsBuilder
+            .UseNpgsql(configuration.GetConnectionString(DATABASE))
+            .UseSnakeCaseNamingConvention()
+            .UseLoggerFactory(CreateLoggerFactory());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +25,6 @@ public class PetDbContext(IConfiguration configuration) : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PetDbContext).Assembly);
     }
 
-    private ILoggerFactory CreateLoggerFactory() => 
+    private static ILoggerFactory CreateLoggerFactory() => 
         LoggerFactory.Create(builder => builder.AddConsole());
 }
