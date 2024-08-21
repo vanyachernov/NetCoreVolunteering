@@ -3,11 +3,11 @@ using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.Domain.Models.Species;
 
-public class Breed
+public record Breed
 {
     private Breed(string breeds) => Breeds = breeds;
     
-    public string Breeds { get; set; } = default!;
+    public string Breeds { get; } = default!;
 
     public static Result<Breed> Create(string breeds)
     {
