@@ -14,16 +14,16 @@ public sealed class Volunteer : Entity<VolunteerId>
     private readonly List<Requisite> _paymentDetails = [];
     
     // For EF Core
-    private Volunteer(VolunteerId volunteerId) : base(volunteerId) {}
+    private Volunteer(VolunteerId id) : base(id) {}
 
     public Volunteer(
-        VolunteerId volunteerId,
+        VolunteerId id,
         FullName fullName,
         Email email,
         Description description,
         ExperienceYears experienceYears,
         PhoneNumber phone) 
-            : base(volunteerId)
+            : base(id)
     {
         FullName = fullName;
         Email = email;

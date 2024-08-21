@@ -4,9 +4,9 @@ namespace NetCoreVolunteering.Domain.Models.Pets.ValueObjects;
 
 public record PetPhoto
 {
-    private PetPhoto(string pathToStorage, bool isMainPhoto)
+    private PetPhoto(string path, bool isMainPhoto)
     {
-        Path = pathToStorage;
+        Path = path;
         IsMainPhoto = isMainPhoto;
     }
     

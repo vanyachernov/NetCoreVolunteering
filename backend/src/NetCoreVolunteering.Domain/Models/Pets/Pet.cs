@@ -13,10 +13,10 @@ namespace NetCoreVolunteering.Domain.Models.Pets;
 public class Pet : Shared.Entity<PetId>
 {
     // For EF Core
-    private Pet(PetId petId) : base(petId) {}
+    private Pet(PetId id) : base(id) {}
     
     private Pet(
-        PetId petId,
+        PetId id,
         string name, 
         SpeciesId speciesId, 
         Description description, 
@@ -32,7 +32,7 @@ public class Pet : Shared.Entity<PetId>
         HelpStatus status,
         PetPhotoList petPhotoList,
         RequisiteList requisiteList)
-    : base(petId)
+    : base(id)
     {
         
         Name = name;
