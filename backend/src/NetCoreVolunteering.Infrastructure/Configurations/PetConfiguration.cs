@@ -40,11 +40,13 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasColumnName("general_description")
                 .IsRequired();
         });
+
+        builder.Property(p => p.BreedId).IsRequired();
         
-        builder.ComplexProperty(p => p.BreedId, pb =>
+        builder.ComplexProperty(p => p.SpeciesId, pb =>
         {
             pb.Property(p => p.Value)
-                .HasColumnName("breed_id");
+                .HasColumnName("species_id");
         });
 
         builder.ComplexProperty(p => p.Color, dс =>
@@ -110,35 +112,37 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         
         builder.Property(p => p.IsVaccinated).IsRequired();
         
-        // So far.
-        builder.OwnsMany(p => p.PaymentDetails, db =>
+        builder.OwnsOne(p => p.PaymentDetails, db =>
         {
             db.ToJson();
-            
-            db
-                .Property(d => d.Title)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-            
-            db
-                .Property(d => d.Description)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH);
+
+            db.OwnsMany(b => b.Requisites, br =>
+            {
+                br
+                    .Property(p => p.Title)
+                    .IsRequired();
+
+                br
+                    .Property(p => p.Description)
+                    .IsRequired();
+            });
         });
         
-        builder.OwnsMany(p => p.Images, pb =>
+        builder.OwnsOne(p => p.Images, pb =>
         {
             pb.ToJson();
+
+            pb.OwnsMany(b => b.PetPhotos, bp =>
+            {
+                bp
+                    .Property(i => i.Path)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             
-            pb
-                .Property(i => i.Path)
-                .IsRequired()
-                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
-            
-            pb
-                .Property(i => i.IsMainPhoto)
-                .IsRequired();
-            
+                bp
+                    .Property(i => i.IsMainPhoto)
+                    .IsRequired();
+            });
         });
     }
 }
