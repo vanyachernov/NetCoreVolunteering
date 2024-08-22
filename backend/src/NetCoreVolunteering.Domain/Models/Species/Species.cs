@@ -9,6 +9,6 @@ public class Species : Entity<SpeciesId>
     private Species(SpeciesId id) : base(id) { }
     private Species(SpeciesId speciesId, string name) : base(speciesId) => Name = name;
     
-    public string Name { get; }
-    public BreedList? Breeds { get; }
+    public string Name { get; private set; }
+    public BreedList? Breeds { get; private set; }
 }

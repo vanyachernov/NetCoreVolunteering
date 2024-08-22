@@ -1,13 +1,15 @@
 using CSharpFunctionalExtensions;
+using NetCoreVolunteering.Domain.Models.Species.IDs;
 using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.Domain.Models.Species;
 
-public record Breed
+public class Breed
 {
+    private Breed() { }
     private Breed(string breeds) => Breeds = breeds;
     
-    public string Breeds { get; } = default!;
+    public string Breeds { get; private set;  } = default!;
 
     public static Result<Breed> Create(string breeds)
     {

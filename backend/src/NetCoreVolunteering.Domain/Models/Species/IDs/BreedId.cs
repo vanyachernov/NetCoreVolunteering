@@ -2,10 +2,7 @@ namespace NetCoreVolunteering.Domain.Models.Species.IDs;
 
 public class BreedId
 {
-    private BreedId(Guid value)
-    {
-        Value = value;
-    }
+    private BreedId(Guid value) => Value = value;
     
     public Guid Value { get; }
 
