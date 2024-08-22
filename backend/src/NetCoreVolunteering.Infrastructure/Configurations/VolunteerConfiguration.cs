@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NetCoreVolunteering.Domain.Models;
 using NetCoreVolunteering.Domain.Models.Volunteers;
 using NetCoreVolunteering.Domain.Models.Volunteers.IDs;
 using NetCoreVolunteering.Domain.Shared;
