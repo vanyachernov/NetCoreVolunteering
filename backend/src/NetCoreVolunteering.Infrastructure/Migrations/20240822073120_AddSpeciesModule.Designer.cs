@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetCoreVolunteering.Infrastructure;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NetCoreVolunteering.Infrastructure.Migrations
 {
     [DbContext(typeof(PetDbContext))]
-    partial class PetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240822073120_AddSpeciesModule")]
+    partial class AddSpeciesModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,30 +167,6 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                         .HasDatabaseName("ix_pets_volunteer_id");
 
                     b.ToTable("pets", (string)null);
-                });
-
-            modelBuilder.Entity("NetCoreVolunteering.Domain.Models.Species.Breed", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Breeds")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("breeds");
-
-                    b.Property<Guid?>("breed_id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("breed_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_breeds");
-
-                    b.HasIndex("breed_id")
-                        .HasDatabaseName("ix_breeds_breed_id");
-
-                    b.ToTable("breeds", (string)null);
                 });
 
             modelBuilder.Entity("NetCoreVolunteering.Domain.Models.Species.Species", b =>
@@ -391,12 +370,51 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("NetCoreVolunteering.Domain.Models.Species.Breed", b =>
+            modelBuilder.Entity("NetCoreVolunteering.Domain.Models.Species.Species", b =>
                 {
-                    b.HasOne("NetCoreVolunteering.Domain.Models.Species.Species", null)
-                        .WithMany("Breeds")
-                        .HasForeignKey("breed_id")
-                        .HasConstraintName("fk_breeds_species_breed_id");
+                    b.OwnsOne("NetCoreVolunteering.Domain.Models.Species.Lists.BreedList", "Breeds", b1 =>
+                        {
+                            b1.Property<Guid>("SpeciesId")
+                                .HasColumnType("uuid");
+
+                            b1.HasKey("SpeciesId");
+
+                            b1.ToTable("species");
+
+                            b1.ToJson("breeds");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SpeciesId")
+                                .HasConstraintName("fk_species_species_id");
+
+                            b1.OwnsMany("NetCoreVolunteering.Domain.Models.Species.Breed", "Breeds", b2 =>
+                                {
+                                    b2.Property<Guid>("BreedListSpeciesId")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<int>("Id")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("integer");
+
+                                    b2.Property<string>("Breeds")
+                                        .IsRequired()
+                                        .HasColumnType("text");
+
+                                    b2.HasKey("BreedListSpeciesId", "Id");
+
+                                    b2.ToTable("species");
+
+                                    b2.ToJson("breeds");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BreedListSpeciesId")
+                                        .HasConstraintName("fk_species_species_breed_list_species_id");
+                                });
+
+                            b1.Navigation("Breeds");
+                        });
+
+                    b.Navigation("Breeds");
                 });
 
             modelBuilder.Entity("NetCoreVolunteering.Domain.Models.Volunteers.Volunteer", b =>
@@ -460,11 +478,6 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                     b.Navigation("PaymentDetails");
 
                     b.Navigation("SocialNetworks");
-                });
-
-            modelBuilder.Entity("NetCoreVolunteering.Domain.Models.Species.Species", b =>
-                {
-                    b.Navigation("Breeds");
                 });
 
             modelBuilder.Entity("NetCoreVolunteering.Domain.Models.Volunteers.Volunteer", b =>
