@@ -9,7 +9,7 @@ public class Breed : Shared.Entity<BreedId>
     private Breed(BreedId id) : base(id) { }
     private Breed(BreedId id, string breeds) : base(id) => Name = breeds;
     
-    public string Name { get; private set;  } = default!;
+    public string Name { get; private set; } = default!;
 
     public static Result<Breed> Create(BreedId id, string name)
     {

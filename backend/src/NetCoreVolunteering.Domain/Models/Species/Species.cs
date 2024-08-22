@@ -8,7 +8,7 @@ public class Species : Shared.Entity<SpeciesId>
 {
     private readonly List<Breed> _breeds = [];
     
-    private Species(SpeciesId id) : base(id) { }
+    private Species(SpeciesId id) : base(id) { } 
     private Species(SpeciesId speciesId, string name) : base(speciesId) => Name = name;
     
     public string Name { get; private set; }
