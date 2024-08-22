@@ -12,7 +12,7 @@ public class Species : Shared.Entity<SpeciesId>
     private Species(SpeciesId speciesId, string name) : base(speciesId) => Name = name;
     
     public string Name { get; private set; }
-    public IReadOnlyCollection<Breed>? Breeds => _breeds;
+    public IReadOnlyCollection<Breed> Breeds => _breeds;
 
     public static Result<Species> Create(SpeciesId id, string name)
     {

@@ -23,7 +23,7 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
             );
 
         builder
-            .Property(b => b.Breeds)
+            .Property(b => b.Name)
             .IsRequired();
     }
 }
