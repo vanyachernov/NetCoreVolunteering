@@ -1,3 +1,3 @@
 namespace NetCoreVolunteering.Application.DTOs;
 
-public record SocialNetworksDto(string title, string link);
+public record SocialNetworksDto(string Title, string Link);

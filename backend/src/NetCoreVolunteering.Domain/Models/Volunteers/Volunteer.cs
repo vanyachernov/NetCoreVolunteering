@@ -1,13 +1,13 @@
+using CSharpFunctionalExtensions;
 using NetCoreVolunteering.Domain.Enums;
 using NetCoreVolunteering.Domain.Models.Pets;
 using NetCoreVolunteering.Domain.Models.Volunteers.IDs;
 using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
-using NetCoreVolunteering.Domain.Shared;
 using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Domain.Models.Volunteers;
 
-public sealed class Volunteer : Entity<VolunteerId>
+public sealed class Volunteer : Shared.Entity<VolunteerId>
 {
     private readonly List<Pet> _pets = [];
     private readonly List<SocialNetwork> _socialNetworks = [];
@@ -16,7 +16,7 @@ public sealed class Volunteer : Entity<VolunteerId>
     // For EF Core
     private Volunteer(VolunteerId id) : base(id) {}
 
-    public Volunteer(
+    private Volunteer(
         VolunteerId id,
         FullName fullName,
         Email email,
@@ -44,4 +44,15 @@ public sealed class Volunteer : Entity<VolunteerId>
     public int AdoptedPetsCount() => Pets.Count(p => p.Status == HelpStatus.Found);
     public int AvailablePetsCount() => Pets.Count(p => p.Status == HelpStatus.LookingForHome);
     public int PetsInTreatmentCount() => Pets.Count(p => p.Status == HelpStatus.NeedsHelp);
+    
+    public static Result<Volunteer> Create(
+        VolunteerId id,
+        FullName fullName,
+        Email email,
+        Description description,
+        ExperienceYears experienceYears,
+        PhoneNumber phone)
+    {
+        return new Volunteer(id, fullName, email, description, experienceYears, phone);
+    }
 }
