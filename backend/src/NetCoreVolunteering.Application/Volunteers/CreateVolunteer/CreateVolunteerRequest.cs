@@ -3,12 +3,12 @@ using NetCoreVolunteering.Application.DTOs;
 namespace NetCoreVolunteering.Application.Volunteers.CreateVolunteer;
 
 public record CreateVolunteerRequest(
-    string firstName, 
-    string middleName, 
-    string lastName, 
-    string email, 
-    string description,
-    int experienceYears,
-    string phone,
-    IEnumerable<SocialNetworksDto>? socialNetworks,
-    IEnumerable<RequisiteDto>? requisites);
+    string FirstName, 
+    string MiddleName, 
+    string LastName, 
+    string Email, 
+    string Description,
+    int ExperienceYears,
+    string Phone,
+    IEnumerable<SocialNetworksDto>? SocialNetworks,
+    IEnumerable<RequisiteDto>? Requisites);

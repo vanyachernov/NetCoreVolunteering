@@ -14,40 +14,21 @@ public class CreateVolunteerHandler(IVolunteersRepository volunteersRepository)
     {
         var voluteerId = VolunteerId.NewId();
 
-        var volunteerFullName = FullName.Create(request.firstName, request.middleName, request.lastName);
-        if (volunteerFullName.IsFailure)
-        {
-            return volunteerFullName.Error;
-        }
+        var volunteerFullName = FullName.Create(request.FirstName, request.MiddleName, request.LastName);
+        var volunteerEmail = Email.Create(request.Email);
+        var volunteerDescription = Description.Create(request.Description);
+        var volunteerExperienceYears = ExperienceYears.Create(request.ExperienceYears);
+        var volunteerPhone = PhoneNumber.Create(request.Phone);
 
-        var volunteerEmail = Email.Create(request.email);
-        if (volunteerEmail.IsFailure)
+        var volunteer = Volunteer.Create(voluteerId, volunteerFullName.Value, volunteerEmail.Value, volunteerDescription.Value, volunteerExperienceYears.Value, volunteerPhone.Value);
+        
+        if (volunteer.IsFailure)
         {
-            return volunteerEmail.Error;
+            return volunteer.Error;
         }
         
-        var volunteerDescription = Description.Create(request.description);
-        if (volunteerDescription.IsFailure)
-        {
-            return volunteerDescription.Error;
-        }
-        
-        var volunteerExperienceYears = ExperienceYears.Create(request.experienceYears);
-        if (volunteerExperienceYears.IsFailure)
-        {
-            return volunteerExperienceYears.Error;
-        }
-        
-        var volunteerPhone = PhoneNumber.Create(request.phone);
-        if (volunteerPhone.IsFailure)
-        {
-            return volunteerPhone.Error;
-        }
+        await volunteersRepository.Create(volunteer.Value, cancellationToken);
 
-        var volunteer = new Volunteer(voluteerId, volunteerFullName.Value, volunteerEmail.Value, volunteerDescription.Value, volunteerExperienceYears.Value, volunteerPhone.Value);
-
-        await volunteersRepository.Create(volunteer, cancellationToken);
-
-        return (Guid)volunteer.Id;
+        return (Guid)volunteer.Value.Id;
     }
 }
