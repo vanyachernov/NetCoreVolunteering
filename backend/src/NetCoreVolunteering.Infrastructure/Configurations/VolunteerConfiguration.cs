@@ -17,7 +17,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         
         builder.Property(p => p.Id)
             .HasConversion(
-                id => id.Id,
+                id => id.Value,
                 value => VolunteerId.Create(value));
         
         builder.ComplexProperty(p => p.FullName, da =>
@@ -54,11 +54,10 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .IsRequired();
         });
         
-        builder.ComplexProperty(p => p.Ages, de =>
+        builder.ComplexProperty(p => p.Ages, db =>
         {
-            de.Property(d => d.Value)
-                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH)
-                .HasColumnName("last_name")
+            db.Property(d => d.Value)
+                .HasColumnName("experience_years")
                 .IsRequired();
         });
         

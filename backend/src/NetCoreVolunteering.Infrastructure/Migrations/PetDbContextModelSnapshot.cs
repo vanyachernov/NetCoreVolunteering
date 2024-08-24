@@ -172,10 +172,10 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<string>("Breeds")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("breeds");
+                        .HasColumnName("name");
 
                     b.Property<Guid?>("breed_id")
                         .HasColumnType("uuid")
@@ -218,10 +218,8 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                             b1.IsRequired();
 
                             b1.Property<int>("Value")
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasMaxLength(100)
                                 .HasColumnType("integer")
-                                .HasColumnName("last_name");
+                                .HasColumnName("experience_years");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Description", "NetCoreVolunteering.Domain.Models.Volunteers.Volunteer.Description#Description", b1 =>
@@ -258,7 +256,6 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("last_name");

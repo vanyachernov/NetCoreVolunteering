@@ -12,14 +12,27 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "species",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_species", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "volunteers",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    last_name = table.Column<int>(type: "integer", maxLength: 100, nullable: false),
+                    experience_years = table.Column<int>(type: "integer", nullable: false),
                     general_description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     first_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     middle_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     phone = table.Column<string>(type: "text", nullable: false),
                     payment_details = table.Column<string>(type: "jsonb", nullable: true),
@@ -28,6 +41,24 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_volunteers", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "breeds",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    breed_id = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_breeds", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_breeds_species_breed_id",
+                        column: x => x.breed_id,
+                        principalTable: "species",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -68,6 +99,11 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "ix_breeds_breed_id",
+                table: "breeds",
+                column: "breed_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_pets_volunteer_id",
                 table: "pets",
                 column: "volunteer_id");
@@ -77,7 +113,13 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "breeds");
+
+            migrationBuilder.DropTable(
                 name: "pets");
+
+            migrationBuilder.DropTable(
+                name: "species");
 
             migrationBuilder.DropTable(
                 name: "volunteers");

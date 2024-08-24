@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NetCoreVolunteering.Domain.Models.Species;
+using NetCoreVolunteering.Domain.Models.Volunteers;
 
 namespace NetCoreVolunteering.Infrastructure;
 
@@ -9,6 +10,7 @@ public class PetDbContext(IConfiguration configuration) : DbContext
 {
     private const string DATABASE = nameof(Database);
     
+    public DbSet<Volunteer> Volunteers { get; set; }
     public DbSet<Species> Species { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
