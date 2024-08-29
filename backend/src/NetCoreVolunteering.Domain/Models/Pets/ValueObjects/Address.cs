@@ -18,26 +18,26 @@ public record Address
     public string State { get; } = default!;
     public string ZipCode { get; } = default!;
 
-    public static Result<Address> Create(string street, string city, string state, string zipCode)
+    public static Result<Address, Error> Create(string street, string city, string state, string zipCode)
     {
         if (string.IsNullOrWhiteSpace(street) || street.Length > Constants.MAX_LOW_TEXT_LENGTH)
         {
-            return Result.Failure<Address>("Street data is empty.");
+            return Errors.General.ValueIsInvalid("Street");
         }
 
         if (string.IsNullOrWhiteSpace(city) || city.Length > Constants.MAX_LOW_TEXT_LENGTH)
         {
-            return Result.Failure<Address>("City data is empty.");
+            return Errors.General.ValueIsInvalid("City");
         }
 
         if (string.IsNullOrWhiteSpace(state) || state.Length > Constants.MAX_LOW_TEXT_LENGTH)
         {
-            return Result.Failure<Address>("State data is empty.");
+            return Errors.General.ValueIsInvalid("State");
         }
 
         if (string.IsNullOrWhiteSpace(zipCode) || zipCode.Length > Constants.MAX_LOW_TEXT_LENGTH)
         {
-            return Result.Failure<Address>("Zip-code data is empty.");
+            return Errors.General.ValueIsInvalid("ZipCode");
         }
 
         return new Address(street, city, state, zipCode);

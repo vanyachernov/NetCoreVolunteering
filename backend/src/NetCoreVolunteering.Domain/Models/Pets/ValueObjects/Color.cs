@@ -9,11 +9,11 @@ public record Color
 
     public string Value { get; } = default!;
     
-    public static Result<Color> Create(string color)
+    public static Result<Color, Error> Create(string color)
     {
         if (string.IsNullOrWhiteSpace(color) || color.Length > Constants.MAX_LOW_TEXT_LENGTH)
         {
-            return Result.Failure<Color>("Health Info is invalid.");
+            return Errors.General.ValueIsInvalid("Color");
         }
 
         return new Color(color);

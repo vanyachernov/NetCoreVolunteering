@@ -1,4 +1,5 @@
 using CSharpFunctionalExtensions;
+using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
 
@@ -8,11 +9,11 @@ public record ExperienceYears
     
     public int Value { get; } = default!;
     
-    public static Result<ExperienceYears> Create(int ages)
+    public static Result<ExperienceYears, Error> Create(int ages)
     {
         if (ages < 0)
         {
-            return Result.Failure<ExperienceYears>("Experience ages is invalid.");
+            return Errors.General.ValueIsInvalid("Ages");
         }
 
         return new ExperienceYears(ages);
