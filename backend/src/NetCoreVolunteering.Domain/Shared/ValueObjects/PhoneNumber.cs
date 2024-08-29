@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
+using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
 
@@ -10,13 +11,13 @@ public record PhoneNumber
     private PhoneNumber(string value) => Value = value;
     public string Value { get; }
     
-    public static Result<PhoneNumber> Create(string phone)
+    public static Result<PhoneNumber, Error> Create(string phone)
     {
         var number = phone.Trim();
         
         if (!Regex.IsMatch(number, PhoneRegex))
         {
-            return Result.Failure<PhoneNumber>("Phone is invalid.");
+            return Errors.General.ValueIsInvalid("Phone");
         }
 
         return new PhoneNumber(number);

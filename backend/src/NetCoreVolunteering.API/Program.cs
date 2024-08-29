@@ -1,17 +1,15 @@
-using NetCoreVolunteering.Application.Volunteers;
-using NetCoreVolunteering.Application.Volunteers.CreateVolunteer;
+using NetCoreVolunteering.Application;
 using NetCoreVolunteering.Infrastructure;
-using NetCoreVolunteering.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-    
-    builder.Services.AddScoped<PetDbContext>();
-    builder.Services.AddScoped<IVolunteersRepository, VolunteersRepository>();
-    builder.Services.AddScoped<CreateVolunteerHandler>();
+
+    builder.Services
+        .AddInfrastructure()
+        .AddApplication();
 }
 
 var app = builder.Build();

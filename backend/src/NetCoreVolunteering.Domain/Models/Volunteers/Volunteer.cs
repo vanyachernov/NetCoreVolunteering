@@ -3,6 +3,7 @@ using NetCoreVolunteering.Domain.Enums;
 using NetCoreVolunteering.Domain.Models.Pets;
 using NetCoreVolunteering.Domain.Models.Volunteers.IDs;
 using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
+using NetCoreVolunteering.Domain.Shared;
 using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Domain.Models.Volunteers;
@@ -45,7 +46,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
     public int AvailablePetsCount() => Pets.Count(p => p.Status == HelpStatus.LookingForHome);
     public int PetsInTreatmentCount() => Pets.Count(p => p.Status == HelpStatus.NeedsHelp);
     
-    public static Result<Volunteer> Create(
+    public static Result<Volunteer, Error> Create(
         VolunteerId id,
         FullName fullName,
         Email email,

@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using NetCoreVolunteering.API.Extensions;
 using NetCoreVolunteering.Application.Volunteers.CreateVolunteer;
 
 namespace NetCoreVolunteering.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class VolunteersController : ControllerBase
+public class VolunteersController : ApplicationController
 {
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
@@ -14,10 +15,10 @@ public class VolunteersController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         var result = await handler.Handle(request, cancellationToken);
-
+        
         if (result.IsFailure)
         {
-            return BadRequest(result.Error);
+            return result.Error.ToResponse();
         }
 
         return Ok(result.Value);

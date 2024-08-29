@@ -9,11 +9,11 @@ public record HealthInfo
 
     public string Value { get; } = default!;
     
-    public static Result<HealthInfo> Create(string healthInfo)
+    public static Result<HealthInfo, Error> Create(string healthInfo)
     {
         if (string.IsNullOrWhiteSpace(healthInfo) || healthInfo.Length > Constants.MAX_LOW_TEXT_LENGTH)
         {
-            return Result.Failure<HealthInfo>("Health Info is invalid.");
+            return Errors.General.ValueIsInvalid("HealthInfo");
         }
 
         return new HealthInfo(healthInfo);

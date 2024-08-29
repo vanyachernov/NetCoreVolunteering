@@ -1,4 +1,5 @@
 using CSharpFunctionalExtensions;
+using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.Domain.Models.Pets.ValueObjects;
 
@@ -13,16 +14,16 @@ public record PetAttributes
     public double Weight { get; } = default!;
     public double Height { get; } = default!;
     
-    public static Result<PetAttributes> Create(double weight, double height)
+    public static Result<PetAttributes, Error> Create(double weight, double height)
     {
         if (weight < 0)
         {
-            return Result.Failure<PetAttributes>("Weight is invalid.");
+            return Errors.General.ValueIsInvalid("Weight");
         }
         
         if (height < 0)
         {
-            return Result.Failure<PetAttributes>("Height is invalid.");
+            return Errors.General.ValueIsInvalid("Height");
         }
 
         return new PetAttributes(weight, height);
