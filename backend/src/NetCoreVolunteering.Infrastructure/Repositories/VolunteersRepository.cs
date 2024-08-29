@@ -18,11 +18,11 @@ public class VolunteersRepository(PetDbContext dbContext) : IVolunteersRepositor
         return volunteer.Id;
     }
 
-    public async Task<Result<Volunteer, Error>> GetByPhone(PhoneNumber requestPhone)
+    public async Task<Result<Volunteer, Error>> GetByPhone(PhoneNumber requestPhone, CancellationToken cancellationToken = default)
     {
         var volunteer = await dbContext.Volunteers
             .Include(v => v.Pets)
-            .FirstOrDefaultAsync(p => p.Phone == requestPhone);
+            .FirstOrDefaultAsync(p => p.Phone == requestPhone, cancellationToken);
 
         if (volunteer is null)
         {

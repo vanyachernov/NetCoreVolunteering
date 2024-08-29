@@ -13,10 +13,10 @@ public record FullName
     }
     
     public string FirstName { get; } = default!;
-    public string MiddleName { get; } = default!;
+    public string? MiddleName { get; } = default!;
     public string LastName { get; } = default!;
     
-    public static Result<FullName, Error> Create(string firstName, string middleName, string lastName)
+    public static Result<FullName, Error> Create(string firstName, string? middleName, string lastName)
     {
         if (string.IsNullOrWhiteSpace(firstName) || firstName.Length > Constants.MAX_LOW_TEXT_LENGTH)
         {
