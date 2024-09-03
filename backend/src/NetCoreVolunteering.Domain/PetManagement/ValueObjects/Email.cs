@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
 using NetCoreVolunteering.Domain.Shared;
 
-namespace NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
+namespace NetCoreVolunteering.Domain.PetManagement.ValueObjects;
 
 public record Email
 {

@@ -1,6 +1,6 @@
-namespace NetCoreVolunteering.Domain.Models.Species.IDs;
+namespace NetCoreVolunteering.Domain.Shared.ValueObjects;
 
-public class SpeciesId
+public record SpeciesId
 {
     private SpeciesId(Guid value)
     {

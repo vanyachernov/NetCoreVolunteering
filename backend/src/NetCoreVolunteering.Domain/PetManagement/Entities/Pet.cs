@@ -1,14 +1,9 @@
 using CSharpFunctionalExtensions;
-using NetCoreVolunteering.Domain.Enums;
-using NetCoreVolunteering.Domain.Models.Pets.IDs;
-using NetCoreVolunteering.Domain.Models.Pets.Lists;
-using NetCoreVolunteering.Domain.Models.Pets.ValueObjects;
-using NetCoreVolunteering.Domain.Models.Species.IDs;
-using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
+using NetCoreVolunteering.Domain.PetManagement.ValueObjects;
 using NetCoreVolunteering.Domain.Shared;
 using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
-namespace NetCoreVolunteering.Domain.Models.Pets;
+namespace NetCoreVolunteering.Domain.PetManagement.Entities;
 
 public class Pet : Shared.Entity<PetId>
 {
@@ -93,7 +88,22 @@ public class Pet : Shared.Entity<PetId>
             return Result.Failure<Pet>("Pet name is invalid.");
         }
         
-        return new Pet(petId, name, speciesId, description, breedId, color, healthInfo, address, petAttributes, phone,
-            isNeutered, birthAt, isVaccinated, status, petPhotoList, requisiteList);
+        return new Pet(
+            petId, 
+            name, 
+            speciesId, 
+            description, 
+            breedId, 
+            color, 
+            healthInfo, 
+            address,
+            petAttributes,
+            phone,
+            isNeutered,
+            birthAt,
+            isVaccinated, 
+            status, 
+            petPhotoList, 
+            requisiteList);
     }
 }

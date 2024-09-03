@@ -1,4 +1,4 @@
-namespace NetCoreVolunteering.Domain.Models.Volunteers.IDs;
+namespace NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 public record VolunteerId
 {

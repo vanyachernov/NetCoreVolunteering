@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NetCoreVolunteering.Domain.Models.Pets;
-using NetCoreVolunteering.Domain.Models.Pets.IDs;
+using NetCoreVolunteering.Domain.PetManagement.Entities;
 using NetCoreVolunteering.Domain.Shared;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Infrastructure.Configurations;
 
@@ -116,13 +116,9 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 
             db.OwnsMany(b => b.Requisites, br =>
             {
-                br
-                    .Property(p => p.Title)
-                    .IsRequired();
+                br.Property(p => p.Title).IsRequired();
 
-                br
-                    .Property(p => p.Description)
-                    .IsRequired();
+                br.Property(p => p.Description).IsRequired();
             });
         });
         
@@ -137,9 +133,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGTH);
             
-                bp
-                    .Property(i => i.IsMainPhoto)
-                    .IsRequired();
+                bp.Property(i => i.IsMainPhoto).IsRequired();
             });
         });
     }

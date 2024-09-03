@@ -35,8 +35,8 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                     last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     middle_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     phone = table.Column<string>(type: "text", nullable: false),
-                    payment_details = table.Column<string>(type: "jsonb", nullable: true),
-                    social_networks = table.Column<string>(type: "jsonb", nullable: true)
+                    requisite_list = table.Column<string>(type: "jsonb", nullable: true),
+                    socials_list = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

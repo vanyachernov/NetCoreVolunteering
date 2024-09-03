@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NetCoreVolunteering.Domain.Models.Volunteers;
-using NetCoreVolunteering.Domain.Models.Volunteers.IDs;
+using NetCoreVolunteering.Domain.PetManagement;
 using NetCoreVolunteering.Domain.Shared;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Infrastructure.Configurations;
 
@@ -68,33 +68,30 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .IsRequired();
         });
 
-        // So far.
         builder
-            .OwnsMany(v => v.SocialNetworks, sb =>
+            .OwnsOne(v => v.RequisiteList, rb =>
             {
-                sb.ToJson();
-                
-                sb
-                    .Property(s => s.Link)
-                    .IsRequired();
-                
-                sb
-                    .Property(s => s.Title)
-                    .IsRequired();
+                rb.ToJson("requisite_list");
+
+                rb.OwnsMany(r => r.Requisites, rbb =>
+                {
+                    rbb.Property(p => p.Title).IsRequired();
+                    
+                    rbb.Property(p => p.Description).IsRequired();
+                });
             });
         
         builder
-            .OwnsMany(v => v.PaymentDetails, pb =>
+            .OwnsOne(v => v.SocialsList, sb =>
             {
-                pb.ToJson();
+                sb.ToJson("socials_list");
+
+                sb.OwnsMany(r => r.Socials, rbb =>
+                {
+                    rbb.Property(s => s.Link).IsRequired();
                 
-                pb
-                    .Property(p => p.Title)
-                    .IsRequired();
-                
-                pb
-                    .Property(p => p.Description)
-                    .IsRequired();
+                    rbb.Property(s => s.Title).IsRequired();
+                });
             });
     }
 }

@@ -1,4 +1,4 @@
-namespace NetCoreVolunteering.Domain.Enums;
+namespace NetCoreVolunteering.Domain.Shared;
 
 public enum HelpStatus
 {

@@ -7,7 +7,7 @@ namespace NetCoreVolunteering.API.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class VolunteersController : ApplicationController
-{
+{ 
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
         [FromServices] CreateVolunteerHandler handler, 

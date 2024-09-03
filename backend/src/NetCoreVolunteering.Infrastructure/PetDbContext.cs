@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using NetCoreVolunteering.Domain.Models.Species;
-using NetCoreVolunteering.Domain.Models.Volunteers;
+using NetCoreVolunteering.Domain.PetManagement;
+using NetCoreVolunteering.Domain.SpeciesManagement;
 
 namespace NetCoreVolunteering.Infrastructure;
 

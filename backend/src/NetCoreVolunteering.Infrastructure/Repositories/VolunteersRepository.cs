@@ -1,9 +1,9 @@
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using NetCoreVolunteering.Application.Volunteers;
-using NetCoreVolunteering.Domain.Models.Volunteers;
-using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
+using NetCoreVolunteering.Domain.PetManagement;
 using NetCoreVolunteering.Domain.Shared;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Infrastructure.Repositories;
 
@@ -26,7 +26,7 @@ public class VolunteersRepository(PetDbContext dbContext) : IVolunteersRepositor
 
         if (volunteer is null)
         {
-            return Errors.General.NotFound();
+            return Errors.General.NotFound(Guid.Empty);
         }
 
         return volunteer;

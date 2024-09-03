@@ -1,6 +1,6 @@
-namespace NetCoreVolunteering.Domain.Models.Pets.IDs;
+namespace NetCoreVolunteering.Domain.Shared.ValueObjects;
 
-public class PetId
+public record PetId
 {
     private PetId(Guid value)
     {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NetCoreVolunteering.Domain.Models.Species;
-using NetCoreVolunteering.Domain.Models.Species.IDs;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
+using NetCoreVolunteering.Domain.SpeciesManagement;
 
 namespace NetCoreVolunteering.Infrastructure.Configurations;
 

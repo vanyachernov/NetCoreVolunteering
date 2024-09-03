@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using NetCoreVolunteering.Domain.Shared;
 
-namespace NetCoreVolunteering.Domain.Models.Pets.ValueObjects;
+namespace NetCoreVolunteering.Domain.PetManagement.ValueObjects;
 
 public record HealthInfo
 {

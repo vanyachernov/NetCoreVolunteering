@@ -1,8 +1,8 @@
 using CSharpFunctionalExtensions;
-using NetCoreVolunteering.Domain.Models.Species.IDs;
 using NetCoreVolunteering.Domain.Shared;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
-namespace NetCoreVolunteering.Domain.Models.Species;
+namespace NetCoreVolunteering.Domain.SpeciesManagement;
 
 public class Species : Shared.Entity<SpeciesId>
 {

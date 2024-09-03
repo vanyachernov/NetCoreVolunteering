@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using NetCoreVolunteering.Domain.Shared;
 
-namespace NetCoreVolunteering.Domain.Models.Volunteers;
+namespace NetCoreVolunteering.Domain.PetManagement.ValueObjects;
 
 public record SocialNetwork
 {

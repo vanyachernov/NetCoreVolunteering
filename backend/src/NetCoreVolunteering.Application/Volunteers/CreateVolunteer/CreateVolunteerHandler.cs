@@ -1,7 +1,6 @@
 using CSharpFunctionalExtensions;
-using NetCoreVolunteering.Domain.Models.Volunteers;
-using NetCoreVolunteering.Domain.Models.Volunteers.IDs;
-using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
+using NetCoreVolunteering.Domain.PetManagement;
+using NetCoreVolunteering.Domain.PetManagement.ValueObjects;
 using NetCoreVolunteering.Domain.Shared;
 using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
@@ -23,7 +22,19 @@ public class CreateVolunteerHandler(IVolunteersRepository volunteersRepository)
         
         var volunteerPhone = PhoneNumber.Create(request.Phone);
 
-        var existingVolunteer = await volunteersRepository.GetByPhone(volunteerPhone.Value);
+        var socialNetworks = new SocialNetworksList(
+            request.SocialNetworks
+                .Select(s => SocialNetwork.Create(s.Link, s.Link))
+                .Select(result => result.Value)
+                .ToList());
+
+        var requisites = new RequisiteList(
+            request.Requisites
+                .Select(r => Requisite.Create(r.Title, r.Description))
+                .Select(result => result.Value)
+                .ToList());
+        
+        var existingVolunteer = await volunteersRepository.GetByPhone(volunteerPhone.Value, cancellationToken);
 
         if (existingVolunteer.IsSuccess)
         {
@@ -38,7 +49,9 @@ public class CreateVolunteerHandler(IVolunteersRepository volunteersRepository)
             volunteerEmail.Value, 
             volunteerDescription.Value, 
             volunteerExperienceYears.Value, 
-            volunteerPhone.Value);
+            volunteerPhone.Value,
+            socialNetworks,
+            requisites);
         
         if (volunteerToCreate.IsFailure)
         {

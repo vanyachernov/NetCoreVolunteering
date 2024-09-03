@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
-using NetCoreVolunteering.Domain.Models.Volunteers;
-using NetCoreVolunteering.Domain.Models.Volunteers.ValueObjects;
+using NetCoreVolunteering.Domain.PetManagement;
 using NetCoreVolunteering.Domain.Shared;
+using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Application.Volunteers;
 
