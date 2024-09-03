@@ -93,5 +93,9 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                     rbb.Property(s => s.Title).IsRequired();
                 });
             });
+
+        builder.HasMany(v => v.Pets)
+            .WithOne()
+            .HasForeignKey("volunteer_id");
     }
 }

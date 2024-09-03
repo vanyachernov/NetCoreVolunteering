@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NetCoreVolunteering.Infrastructure.Migrations
 {
     [DbContext(typeof(PetDbContext))]
-    [Migration("20240902170801_Initial")]
+    [Migration("20240903155120_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status");
 
-                    b.Property<Guid?>("VolunteerId")
+                    b.Property<Guid?>("volunteer_id")
                         .HasColumnType("uuid")
                         .HasColumnName("volunteer_id");
 
@@ -163,7 +163,7 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_pets");
 
-                    b.HasIndex("VolunteerId")
+                    b.HasIndex("volunteer_id")
                         .HasDatabaseName("ix_pets_volunteer_id");
 
                     b.ToTable("pets", (string)null);
@@ -290,7 +290,7 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                 {
                     b.HasOne("NetCoreVolunteering.Domain.PetManagement.Volunteer", null)
                         .WithMany("Pets")
-                        .HasForeignKey("VolunteerId")
+                        .HasForeignKey("volunteer_id")
                         .HasConstraintName("fk_pets_volunteers_volunteer_id");
 
                     b.OwnsOne("NetCoreVolunteering.Domain.PetManagement.ValueObjects.RequisiteList", "PaymentDetails", b1 =>
