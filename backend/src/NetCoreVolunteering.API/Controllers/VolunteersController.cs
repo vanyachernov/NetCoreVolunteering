@@ -1,6 +1,9 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreVolunteering.API.Extensions;
+using NetCoreVolunteering.API.Response;
 using NetCoreVolunteering.Application.Volunteers.CreateVolunteer;
+using NetCoreVolunteering.Domain.Shared;
 
 namespace NetCoreVolunteering.API.Controllers;
 
@@ -10,7 +13,7 @@ public class VolunteersController : ApplicationController
 { 
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
-        [FromServices] CreateVolunteerHandler handler, 
+        [FromServices] CreateVolunteerHandler handler,
         [FromBody] CreateVolunteerRequest request,
         CancellationToken cancellationToken = default)
     {
