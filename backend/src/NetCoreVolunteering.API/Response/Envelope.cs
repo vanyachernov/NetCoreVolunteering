@@ -16,8 +16,8 @@ public record Envelope
     public DateTime TimeGenerated { get; }
 
     public static Envelope Ok(object? result = null) =>
-        new Envelope(result, null);
+        new(result, []);
     
     public static Envelope Error(IEnumerable<ResponseError> errors) =>
-        new Envelope(null, errors);
+        new(null, errors);
 };

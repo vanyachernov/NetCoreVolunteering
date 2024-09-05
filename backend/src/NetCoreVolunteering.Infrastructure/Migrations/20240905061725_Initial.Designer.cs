@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NetCoreVolunteering.Infrastructure.Migrations
 {
     [DbContext(typeof(PetDbContext))]
-    [Migration("20240903155120_Initial")]
+    [Migration("20240905061725_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -291,6 +291,7 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                     b.HasOne("NetCoreVolunteering.Domain.PetManagement.Volunteer", null)
                         .WithMany("Pets")
                         .HasForeignKey("volunteer_id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("fk_pets_volunteers_volunteer_id");
 
                     b.OwnsOne("NetCoreVolunteering.Domain.PetManagement.ValueObjects.RequisiteList", "PaymentDetails", b1 =>

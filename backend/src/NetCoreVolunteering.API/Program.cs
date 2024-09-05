@@ -1,5 +1,7 @@
+using NetCoreVolunteering.API.Validation;
 using NetCoreVolunteering.Application;
 using NetCoreVolunteering.Infrastructure;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -10,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddInfrastructure()
         .AddApplication();
+
+    builder.Services.AddFluentValidationAutoValidation(configuration =>
+    {
+        configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
+    });
 }
 
 var app = builder.Build();

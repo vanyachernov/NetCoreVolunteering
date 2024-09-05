@@ -288,6 +288,7 @@ namespace NetCoreVolunteering.Infrastructure.Migrations
                     b.HasOne("NetCoreVolunteering.Domain.PetManagement.Volunteer", null)
                         .WithMany("Pets")
                         .HasForeignKey("volunteer_id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("fk_pets_volunteers_volunteer_id");
 
                     b.OwnsOne("NetCoreVolunteering.Domain.PetManagement.ValueObjects.RequisiteList", "PaymentDetails", b1 =>
