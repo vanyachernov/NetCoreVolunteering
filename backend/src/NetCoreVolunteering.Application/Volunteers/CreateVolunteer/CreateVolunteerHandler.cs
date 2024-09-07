@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 using NetCoreVolunteering.Domain.PetManagement;
 using NetCoreVolunteering.Domain.PetManagement.ValueObjects;
 using NetCoreVolunteering.Domain.Shared;
@@ -7,7 +8,9 @@ using NetCoreVolunteering.Domain.Shared.ValueObjects;
 
 namespace NetCoreVolunteering.Application.Volunteers.CreateVolunteer;
 
-public class CreateVolunteerHandler(IVolunteersRepository volunteersRepository)
+public class CreateVolunteerHandler(
+    IVolunteersRepository volunteersRepository,
+    ILogger<CreateVolunteerHandler> logger)
 {
     public async Task<Result<Guid, Error>> Handle(
         CreateVolunteerRequest request,
@@ -58,6 +61,8 @@ public class CreateVolunteerHandler(IVolunteersRepository volunteersRepository)
         
         await volunteersRepository.Create(volunteerToCreate.Value, cancellationToken);
 
+        logger.LogInformation("Created volunteer {fullName} with id {voluteerId}", fullName, voluteerId);
+        
         return (Guid)volunteerToCreate.Value.Id;
     }
 }
